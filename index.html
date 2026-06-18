@@ -1,320 +1,1590 @@
 <!DOCTYPE html>
-<html  lang="en">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adnan's Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/9f3628705c.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Adnan Sherwani — Data Analyst & Data Scientist based in Toronto, Canada"/>
+  <title>Adnan Sherwani | Data Analyst & Scientist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:      #0d1f40;
+      --navy-mid:  #1a3260;
+      --navy-soft: #243a70;
+      --gold:      #b8975a;
+      --gold-light:#d4af7a;
+      --gray-50:   #f7f8fa;
+      --gray-100:  #eef0f4;
+      --gray-200:  #d8dce6;
+      --gray-400:  #8a92a6;
+      --gray-600:  #4a5368;
+      --gray-800:  #1e2535;
+      --white:     #ffffff;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+      --radius:    6px;
+      --shadow-sm: 0 2px 8px rgba(13,31,64,.08);
+      --shadow-md: 0 6px 24px rgba(13,31,64,.12);
+      --shadow-lg: 0 16px 48px rgba(13,31,64,.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--gray-800);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; line-height: 1.2; }
+
+    a { color: inherit; text-decoration: none; }
+
+    img { max-width: 100%; display: block; }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--gray-100); }
+    ::-webkit-scrollbar-thumb { background: var(--navy-soft); border-radius: 10px; }
+
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,31,64,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184,151,90,0.25);
+      transition: var(--transition);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-200);
+      transition: color var(--transition);
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav */
+    .mobile-nav {
+      display: none;
+      background: var(--navy);
+      padding: 1.5rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mobile-nav.open { display: block; }
+
+    .mobile-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .mobile-nav a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gray-200);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color var(--transition);
+    }
+
+    .mobile-nav a:hover { color: var(--gold-light); }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    #home {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e3a6e 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 68px;
+    }
+
+    /* Subtle grid overlay */
+    #home::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(184,151,90,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,151,90,0.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+
+    /* Decorative circle */
+    #home::after {
+      content: '';
+      position: absolute;
+      right: -120px; top: 50%;
+      transform: translateY(-50%);
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(184,151,90,0.1);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--gold-light);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      max-width: 460px;
+      margin-bottom: 2.4rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184,151,90,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* Stats strip */
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-item { text-align: left; }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    /* Hero photo card */
+    .hero-photo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .photo-frame {
+      width: 320px;
+      height: 360px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(184,151,90,0.25);
+      box-shadow: var(--shadow-lg);
+      background: var(--navy-soft);
+      position: relative;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+
+    /* Decorative corner accent */
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      top: -12px; right: -12px;
+      width: 100%; height: 100%;
+      border: 1px solid rgba(184,151,90,0.3);
+      border-radius: 12px;
+      z-index: -1;
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION COMMON
+    ═══════════════════════════════════════ */
+    section { padding: 6rem 2rem; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .section-subtitle {
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      color: var(--gray-600);
+      max-width: 560px;
+    }
+
+    /* ═══════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════ */
+    #about {
+      background: var(--gray-50);
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-photo-wrap {
+      position: relative;
+    }
+
+    .about-photo {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: var(--shadow-md);
+      background: var(--gray-200);
+      aspect-ratio: 4/5;
+      object-fit: cover;
+    }
+
+    .about-photo-badge {
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .badge-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .badge-label {
+      font-size: 0.75rem;
+      color: var(--gray-200);
+      letter-spacing: 0.04em;
+    }
+
+    .about-bio {
+      padding-top: 0.5rem;
+    }
+
+    .about-bio p {
+      font-size: 1.05rem;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      margin-top: 2rem;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--gray-200);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.65rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--gray-400);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: var(--transition);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .tab-btn.active {
+      color: var(--navy);
+      border-bottom-color: var(--gold);
+    }
+
+    .tab-btn:hover:not(.active) { color: var(--gray-600); }
+
+    .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+    .tab-pane.active { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* Skills grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+    }
+
+    .skill-cat {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .skill-items {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    /* Timeline (education/experience) */
+    .timeline { list-style: none; }
+
+    .timeline-item {
+      display: flex;
+      gap: 1.2rem;
+      padding-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 11px; top: 24px;
+      width: 1px;
+      height: calc(100% - 10px);
+      background: var(--gray-200);
+    }
+
+    .timeline-dot {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .timeline-content h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .timeline-content .org {
+      font-size: 0.88rem;
+      color: var(--gold);
+      margin: 0.1rem 0;
+    }
+
+    .timeline-content .dur {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      letter-spacing: 0.04em;
+    }
+
+    /* Cert pills */
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .cert-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+    }
+
+    .cert-name { font-size: 0.9rem; color: var(--gray-800); font-weight: 500; }
+
+    .cert-year {
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      background: var(--gray-100);
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .cert-year.pursuing {
+      color: var(--gold);
+      background: rgba(184,151,90,0.1);
+    }
+
+    /* ═══════════════════════════════════════
+       EXPERIENCE
+    ═══════════════════════════════════════ */
+    #services { background: var(--white); }
+
+    .exp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .exp-card {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 2rem;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--transition), transform var(--transition);
+      align-items: start;
+    }
+
+    .exp-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .exp-logo {
+      width: 72px; height: 72px;
+      border-radius: 8px;
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      flex-shrink: 0;
+    }
+
+    .exp-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+    }
+
+    .exp-logo-placeholder {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--navy-soft);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .exp-role {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .exp-company {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-top: 0.1rem;
+    }
+
+    .exp-duration {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      background: var(--gray-100);
+      padding: 0.25rem 0.8rem;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .exp-desc {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-top: 0.5rem;
+    }
+
+    .exp-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      background: rgba(13,31,64,0.07);
+      color: var(--navy-soft);
+      letter-spacing: 0.03em;
+    }
+
+    /* ═══════════════════════════════════════
+       PROJECTS
+    ═══════════════════════════════════════ */
+    #portfolio {
+      background: var(--gray-50);
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .project-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--navy);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+      transition: opacity var(--transition);
+    }
+
+    .project-card:hover .project-thumb img { opacity: 0.9; }
+
+    .project-thumb-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--navy-mid), var(--navy-soft));
+    }
+
+    .project-thumb-icon {
+      font-size: 3rem;
+      opacity: 0.4;
+    }
+
+    .project-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gray-100);
+    }
+
+    .project-skills {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .project-link {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      border: 1px solid var(--gray-200);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .project-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .see-more-wrap {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    /* ═══════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════ */
+    #contact {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    #contact .section-title { color: var(--white); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .contact-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(184,151,90,0.15);
+      border: 1px solid rgba(184,151,90,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+
+    .contact-info-item a {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      transition: color var(--transition);
+    }
+
+    .contact-info-item a:hover { color: var(--gold-light); }
+
+    /* Contact form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius);
+      padding: 0.8rem 1rem;
+      font-size: 0.95rem;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color var(--transition);
+      outline: none;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+
+    .form-note {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.25rem;
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      background: var(--gray-800);
+      color: var(--gray-400);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.82rem;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       SCROLL FADE-IN
+    ═══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .photo-frame { width: 260px; height: 300px; }
+      .hero-photo { order: -1; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo-wrap { max-width: 340px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 4rem 1.5rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner { padding: 3rem 0; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .exp-card { grid-template-columns: 1fr; gap: 1rem; }
+      .exp-logo { width: 56px; height: 56px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.2rem; }
+      .hero-actions { flex-direction: column; }
+      .btn { justify-content: center; }
+      .tab-btn { font-size: 0.78rem; padding: 0.55rem 0.85rem; }
+    }
+  </style>
 </head>
 <body>
-<div id="header">
+
+  <!-- ── NAV ───────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">Adnan<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Experience</a></li>
+        <li><a href="#portfolio">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Experience</a></li>
+        <li><a href="#portfolio">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ──────────────────────────────── -->
+  <section id="home">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-eyebrow">Data Analyst &amp; Data Scientist</div>
+        <h1 class="hero-title">
+          Hi, I'm <em>Adnan</em><br/>Sherwani
+        </h1>
+        <p class="hero-subtitle">
+          Turning complex data into clear, actionable decisions. 4+ years of experience in data intelligence, predictive analytics, and business insights across global organisations.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Get In Touch</a>
+          <a href="https://adnansherwani.github.io/Sherwani%20Adnan%20Resume.docx" class="btn btn-outline" download>Download CV</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">4+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6+</div>
+            <div class="stat-label">Certifications</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Major Projects</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <div class="photo-frame">
+          <img
+            src="https://adnansherwani.github.io/AdnanDPCCpng.png"
+            alt="Adnan Sherwani"
+            onerror="this.style.display='none'"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ─────────────────────────────── -->
+  <section id="about">
     <div class="container">
-        <nav>
-            <img src="portfolio.png" class="logo">
-            <ul id="sidemenu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Experience</a></li>
-                <li><a href="#portfolio">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <i class="fa-solid fa-circle-xmark" onclick="closemenu()"></i>
-            </ul>
-            <i class="fa-solid fa-bars" onclick="openmenu()"></i>
-        </nav>
-        <div class="header-text">
-            <p><span id="element"></span></p>
-            <h1>Hi, I'm <span>Adnan Sherwani</span> <br>based in Toronto, Canada </h1>
-        </div>
-        <a href="Sherwani Adnan Resume.docx" download class="btn btn2">Download CV</a>
-    </div>
-</div>
-<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-<script>
-    var typed = new Typed('#element', {
-      strings: ['Data Analyst', 'BI Analyst', 'Data Scientist', 'Data Analyst | BI Analyst | Data Scientist'],
-      typeSpeed: 50,
-    });
-  </script>
-<!---------------------about section------------------->
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Who I Am</div>
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">A data professional passionate about transforming raw information into strategic value.</p>
+      </div>
 
-<div id="about">
+      <div class="about-grid">
+        <div class="about-photo-wrap reveal">
+          <img
+            class="about-photo"
+            src="https://adnansherwani.github.io/About%20Me.png"
+            alt="About Adnan Sherwani"
+            loading="lazy"
+            onerror="this.style.background='#d8dce6'; this.alt=''"
+          />
+          <div class="about-photo-badge">
+            <span class="badge-num">4+</span>
+            <span class="badge-label">Years of Experience</span>
+          </div>
+        </div>
+
+        <div class="about-bio reveal">
+          <p>
+            I am a highly motivated <strong>Data Analyst</strong> with over four years of experience in the data intelligence and consumer insights industry. I specialize in statistical analysis, data visualization, and building scalable ETL processes.
+          </p>
+          <p>
+            My toolkit includes <strong>Python, SQL, Power BI, Microsoft Excel, and Azure Cloud</strong>. I completed a Post-Graduate degree in Predictive Analytics (Statistics) at Conestoga College, Canada, in 2023 — equipping me to deliver data-driven solutions that empower teams and delight stakeholders.
+          </p>
+          <p>
+            Currently based in <strong>Toronto, Canada</strong>, I am open to full-time opportunities in data analytics, data science, and business intelligence.
+          </p>
+
+          <!-- Tabs -->
+          <div class="tabs">
+            <div class="tab-buttons">
+              <button class="tab-btn active" data-tab="skills">Skills</button>
+              <button class="tab-btn" data-tab="education">Education</button>
+              <button class="tab-btn" data-tab="certs">Certifications</button>
+            </div>
+
+            <!-- SKILLS -->
+            <div class="tab-pane active" id="tab-skills">
+              <div class="skills-grid">
+                <div class="skill-card">
+                  <div class="skill-cat">Programming &amp; Data</div>
+                  <div class="skill-items">Python · Azure Synapse · Azure AI</div>
+                </div>
+                <div class="skill-card">
+                  <div class="skill-cat">Visualization</div>
+                  <div class="skill-items">Power BI · Excel · IBM Cognos</div>
+                </div>
+                <div class="skill-card">
+                  <div class="skill-cat">Databases</div>
+                  <div class="skill-items">SQL Server · PostgreSQL</div>
+                </div>
+                <div class="skill-card">
+                  <div class="skill-cat">Machine Learning</div>
+                  <div class="skill-items">Regression · Classification · Clustering · Random Forest · ETS · ETL</div>
+                </div>
+                <div class="skill-card">
+                  <div class="skill-cat">Tools &amp; Platforms</div>
+                  <div class="skill-items">Azure · Git · JIRA · Jupyter · Linux · Power Apps</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EDUCATION -->
+            <div class="tab-pane" id="tab-education">
+              <ul class="timeline">
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <h4>Post-Graduate in Predictive Analytics</h4>
+                    <div class="org">Conestoga College, Guelph, Canada</div>
+                    <div class="dur">2022 – 2023</div>
+                  </div>
+                </li>
+                <li class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <h4>Bachelor of Technology</h4>
+                    <div class="org">Dronacharya College of Engineering, Gurugram, India</div>
+                    <div class="dur">2012 – 2016</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- CERTS -->
+            <div class="tab-pane" id="tab-certs">
+              <div class="cert-list">
+                <div class="cert-item">
+                  <span class="cert-name">Microsoft Power BI Data Analyst PL-300</span>
+                  <span class="cert-year">2024</span>
+                </div>
+                <div class="cert-item">
+                  <span class="cert-name">Microsoft Azure AI AZ-900</span>
+                  <span class="cert-year">2024</span>
+                </div>
+                <div class="cert-item">
+                  <span class="cert-name">Microsoft Fabric Analytics Engineer DP-600</span>
+                  <span class="cert-year pursuing">Pursuing</span>
+                </div>
+                <div class="cert-item">
+                  <span class="cert-name">SQL Certification – TestDome</span>
+                  <span class="cert-year">2023</span>
+                </div>
+                <div class="cert-item">
+                  <span class="cert-name">Python – HackerRank</span>
+                  <span class="cert-year">2022</span>
+                </div>
+                <div class="cert-item">
+                  <span class="cert-name">IBM Blockchain Essentials</span>
+                  <span class="cert-year">2018</span>
+                </div>
+                <div class="cert-item">
+                  <span class="cert-name">RedHat RHCSA</span>
+                  <span class="cert-year">2016</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ────────────────────────── -->
+  <section id="services">
     <div class="container">
-        <div class="row">
-            <div class="about-col-1">
-                <img src="About Me.png">
-            </div>
-            <div class="about-col-2">
-                <h1 class="sub-title">About Me</h1>
-                <p>Highly motivated Data Analyst with over 4 years of extensive experience
-                     in the data intelligence and consumer insights industry. Proficient 
-                     in statistical analysis, data visualization, and maintaining data and
-                      ETL processes using Python, SQL, Power BI, Microsoft Excel, and Azure
-                       Cloud. Demonstrated success in management, data validation, and data
-                        transformation, with a strong focus on empowering teams to 
-                        efficiently analyze data and derive actionable insights. Completed
-                         a Post-Graduate degree in Predictive Analytics (Statistics) in 
-                         2023 in Canada. Skilled in collaborating with clients and 
-                         stakeholders to deliver innovative data solutions.</p>
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Career</div>
+        <h2 class="section-title">Professional Experience</h2>
+        <p class="section-subtitle">A track record of delivering data insights across global organizations.</p>
+      </div>
 
-                <div class="tab-titles">
-                    <p class = "tab-links active-link" onclick="opentab('skills')">Skills</p>
-                    <p class = "tab-links" onclick="opentab('experience')">Experience</p>
-                    <p class = "tab-links" onclick="opentab('education')">Education</p>
-                    <p class = "tab-links" onclick="opentab('certification')">Certification</p>
-                </div>
-                <div class="tab-contents active-tab" id="skills">
-                    <ul>
-                        <li><span>Programming & Data Analysis:</span><br>Python, Azure Synapse, Azure AI</li>
-                        <li><span>Data Visualization:</span><br>Microsoft Power BI, Excel, IBM Cognos</li>
-                        <li><span>Database Management:</span><br>SQL Server, PostGres</li>
-                        <li><span>Machine Learning/Statistical:</span><br>Regression, Classification, Clustering,
-                            Random Forest, Expotential Smoothing ETS, Logistic Regression, ETL</li>
-                        <li><span>Tools:</span><br>Visual Studio, Power Apps, Jupyter Notebook, Git,
-                            JIRA Confluence, Azure, Linux, Unix</li>
-                    </ul>
-                </div>
-                <div class="tab-contents" id="experience">
-                    <ul>
-                        <li><span>Junior Data Scientist Internship</span><br>Company: Magnify Access Inc<br>Duration: Feb 2024 - Apr 2024</li>
-                        <li><span>Data Analyst/Specialist</span><br>Company: GFK NielsenIQ<br>Duration: Jan 2020 - December 2022</li>
-                        <li><span>Data Associate/Practitioner</span><br>Company: IBM<br>Duration: Jul 2018 - Jan 2020</li>
-                        <li><span>Associate IT</span><br>Company: Corporate Executive Board (Gartner)<br>Duration: Oct 2016 - Apr 2017</li>
-                   </ul>
-                </div>
-                <div class="tab-contents" id="education">
-                    <ul>
-                        <li><span>Post-Graduate in Predictive Analytics</span><br>Conestoga College, Guelph, Canada<br>Duration: 2022-2023</li>
-                        <li><span>Bachelor of Technology</span><br>Dronacharya College of Engineering, Gurugram, India<br>Duration: 2012 - 2016</li>
-                    </ul>
-                </div>
-                <div class="tab-contents" id="certification">
-                    <ul>
-                        <li><span>Microsoft Certified: Power BI Data Analyst PL-300</span><br>Issued: 2024</li>
-                        <li><span>Microsoft Certified:  Azure AI AZ-900</span><br>Issued: 2024</li>
-                        <li><span>IBM Blockchain Essentials</span><br>Issued: 2018</li>
-                        <li><span>SQL by Testdome</span><br>Issued: 2023</li>
-                        <li><span>Python by HackerRank</span><br>Issued: 2022</li>
-                        <li><span>RedHat RHCSA Completion</span><br>Issued: 2016</li>
-                        <li><span>Microsoft Certified: Fabric Analytics Engineer DP-600</span><br>Pursuing</li>
-                    </ul>
+      <div class="exp-list">
+
+        <div class="exp-card reveal">
+          <div class="exp-logo">
+            <img src="https://adnansherwani.github.io/magnify.png" alt="Magnify Access" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <span class="exp-logo-placeholder" style="display:none;">M</span>
+          </div>
+          <div>
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">Junior Data Scientist Intern</div>
+                <div class="exp-company">Magnify Access Inc</div>
+              </div>
+              <span class="exp-duration">Feb 2024 – Apr 2024</span>
             </div>
+            <p class="exp-desc">
+              Developed outcome-driven solutions for enhanced workplace accessibility, focusing on the application of Transformer models. Contributed to NLP pipelines, model evaluation, and accessibility-focused feature development using Python and Azure AI services.
+            </p>
+            <div class="exp-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Transformer Models</span>
+              <span class="tag">Azure AI</span>
+              <span class="tag">NLP</span>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<!---------------------services section------------------->
-
-<div id="services">
-    <div class="container" id="blur">
-        <h1 class="sub-title">Relevant Experience</h1>
-        <div class="services-list">
-            <div>
-                <img src="magnify.png">
-                <h3>Junior Data Scientist Intern</h3>
-                <h4>Magnify Access Inc</h4>
-                <p>Feb 2024 - Apr 2024</p><br>
-                <p>Developed outcome-driven solutions for enhanced workplace accessibility, focusing on the application of Transformer models.</p><br>
-                <a href="#" onclick="togglePopup(event, 'Magnify Access Inc', 'Feb 2024 - Apr 2024', 'Developed outcome-driven solutions for enhanced workplace accessibility, focusing on the application of Transformer models.'+
-                '|Utilized Python and Scikit-learn libraries to implement and optimize AI algorithms for workplace accessibility.'+
-                '|Conducted experimentation and evaluation of AI models, iterating on approaches to improve performance and accuracy.'+
-                '|Documented code, methodologies, and findings to ensure knowledge transfer and facilitate future developments.')">Read More</a>
+        <div class="exp-card reveal">
+          <div class="exp-logo">
+            <img src="https://adnansherwani.github.io/gfk2.png" alt="GFK NielsenIQ" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <span class="exp-logo-placeholder" style="display:none;">G</span>
+          </div>
+          <div>
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">Data Analyst / Specialist</div>
+                <div class="exp-company">GFK NielsenIQ</div>
+              </div>
+              <span class="exp-duration">Jan 2020 – Dec 2022</span>
             </div>
-            <div>
-                <img src="gfk2.png">
-                <h3>Data Analyst / Specialist</h3>
-                <h4>GFK NielsenIQ</h4>
-                <p>Jan 2020 - Dec 2022</p><br>
-                <p>Proficient in pattern detection to extract crucial insights from business processes using statistical techniques such as clustering, classification, and regression, ensuring comprehensive coverage on a monthly and weekly basis.</p>
-                <a href="#" onclick="togglePopup(event, 'GFK NielsenIQ',
-                 'Jan 2020 - Dec 2022', 'Proficient in pattern detection to extract crucial insights from business processes using statistical techniques such as clustering, classification, and regression, ensuring comprehensive coverage on a monthly and weekly basis.'+
-                 '|Identified and implemented key metrics, enhancing business efficiency, utilized SQL (Snowflake and Oracle) and Python (Scikit-learn and Pandas) to manage and analyze large datasets. Driving a 20% increase in client satisfaction, potentially leading to higher retention rates or increased business from the region.'+
-                 '|Assisted clients in understanding market dynamics, consumer preferences, and competitive positioning, identifying potential market gaps for growth and aiding in the refinement of pricing strategies for maximum profitability.'+
-                 '|Communicated key findings through compelling data visualizations using PowerBI and Excel, effectively conveying complex insights to clients, achieving a track record of on-time report deliveries exceeding 95%.'+
-                 '|Provided regular feedback and proactive suggestions on the development of internal tools, including automation in Data Warehouse, JIRA, and Workflow Management tools, as part of GFK’s expert community group.'+
-                 '|Contributed to the Oracle-to-Azure Cloud transition, boosting database management efficiency by 18% and reducing time by 50%')">Read More</a>
+            <p class="exp-desc">
+              Applied advanced statistical techniques — including clustering, classification, and regression — to detect patterns and extract business intelligence. Delivered monthly and weekly reporting insights to support strategic decisions, managed ETL pipelines, and ensured rigorous data validation and quality standards.
+            </p>
+            <div class="exp-tags">
+              <span class="tag">SQL</span>
+              <span class="tag">Python</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Statistical Modelling</span>
+              <span class="tag">ETL</span>
             </div>
-            <div>
-                <img src="IBM.png">
-                <h3>Data Associate / Practitioner</h3>
-                <h4>IBM</h4>
-                <p>Jul 2018 - Jan 2020</p><br>
-                <p>Supported data processing and analysis activities, including cleaning and organizing data, coding responses, and preparing data files for analysis.</p>
-                <a href="#" onclick="togglePopup(event, 'IBM', 'Jul 2018 - Jan 2020', 'Supported data processing and analysis activities, including cleaning and organizing data, coding responses, and preparing data files for analysis.'+
-                '|Ensured the accuracy and quality of data collected and analyzed, performing data checks, reviewing data sets, and assisting in quality control processes.'+
-                '|Created standardized reports with detailed findings using tools like IBM Cognos BI, SQL and Excel, providing useful insights.'+
-                '|Assisted in the preparation of research reports, presentations, and deliverables, including data visualization and report formatting.')">Read More</a>
-            </div>
-            <div>
-                <img src="Gartner.png">
-                <h3>Associate Information Technology</h3>
-                <h4>CEB (Gartner)</h4>
-                <p>Oct 2016 - Apr 2017</p><br>
-                <p>Collected and analyzed data from vendors, establishing goals and presenting findings.</p>
-                <a href="#" onclick="togglePopup(event, 'CEB (Gartner)', 'Oct 2016 - Apr 2017', 'Collected and analyzed data from vendors, establishing goals and presenting findings.'+
-                '|Performed human resource insights from various enterprises, identifying management needs for effective business operations.')">Read More</a>
-            </div>
+          </div>
         </div>
+
+        <div class="exp-card reveal">
+          <div class="exp-logo">
+            <img src="https://adnansherwani.github.io/IBM.png" alt="IBM" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <span class="exp-logo-placeholder" style="display:none;">I</span>
+          </div>
+          <div>
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">Data Associate / Practitioner</div>
+                <div class="exp-company">IBM</div>
+              </div>
+              <span class="exp-duration">Jul 2018 – Jan 2020</span>
+            </div>
+            <p class="exp-desc">
+              Supported comprehensive data processing and analysis activities, including data cleaning, normalization, and coding of survey responses. Prepared structured data files for downstream analysis and ensured integrity of datasets across cross-functional teams.
+            </p>
+            <div class="exp-tags">
+              <span class="tag">Data Cleaning</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Excel</span>
+              <span class="tag">Data Validation</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-card reveal">
+          <div class="exp-logo">
+            <img src="https://adnansherwani.github.io/Gartner.png" alt="Gartner" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <span class="exp-logo-placeholder" style="display:none;">G</span>
+          </div>
+          <div>
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">Associate Information Technology</div>
+                <div class="exp-company">Corporate Executive Board (Gartner)</div>
+              </div>
+              <span class="exp-duration">Oct 2016 – Apr 2017</span>
+            </div>
+            <p class="exp-desc">
+              Collected and analyzed vendor data, established measurable performance goals, and presented structured findings to leadership. Contributed to improving vendor management processes and reporting accuracy.
+            </p>
+            <div class="exp-tags">
+              <span class="tag">Data Analysis</span>
+              <span class="tag">Reporting</span>
+              <span class="tag">Vendor Management</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-</div>
+  </section>
 
-<div id="popup" class="popup">
-    <div class="popup-content">
-        <i class="fa-solid fa-circle-xmark" onclick="togglePopup(event)"></i>
-        <h1 id="popup-title">Title</h1>
-        <p id="popup-date">Date</p>
-        <p id="popup-description">Description</p>
-        <a href="#" onclick="togglePopup(event)">Close</a>
-    </div>
-</div>
-
-<!---------------------portfolio section------------------->
-
-<div id="portfolio">
+  <!-- ── PROJECTS ──────────────────────────── -->
+  <section id="portfolio">
     <div class="container">
-        <h1 class="sub-title">Projects</h1>
-        <div class="work-list">
-            <div class="work">
-                <img src="IESO (1).png">
-                <div class="layer">
-                    <h3>IESO Ontario Energy Price</h3>
-                    <p>The "Energy Consumption from PJM Energy in MW" project utilized statistical analysis
-                        and time series analysis techniques in Python and R to examine energy consumption data
-                        from PJM Energy. By applying these methods, the project aimed to gain insights into energy
-                        consumption patterns over time, facilitating informed decision-making in energy management
-                        and resource allocation. Skills: Python, Statistical Techniques, R, NLP</p> <br>
-                        <iframe src="https://1drv.ms/p/s!Ahh3FjfS3-pLmR7wpvb2pJOgUIoi?embed=1&amp;em=2&amp;wdAr=1.7777777777777777" width="550px" height="300px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
-                            <a href="https://github.com/adnansherwani/Forecasting-DataModel"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                </div>
-            </div>
-            <div class="work">
-                <img src="case.png">
-                <div class="layer">
-                    <h3>Case Studies</h3>
-                    <p> Understanding the core concept of supervised machine learning with the help of two case studies. The first case study deals with the quatity discount where a char company needs to maximize its profit.
-                        The second case study deals with the classification of the house prices based on facilities.</p><br>
-                    <iframe src="https://1drv.ms/p/s!Ahh3FjfS3-pLmSIYlokKg-6lxD7c?embed=1&amp;em=2&amp;wdAr=1.7777777777777777" width="550px" height="300px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
-                        <a href="https://github.com/adnansherwani/CaseStudies"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                </div>
-            </div>
-            <div class="work">
-                <img src="hsc-2.png">
-                <div class="layer">
-                    <h3>Huntington Society Of Canada</h3>
-                    <p>Huntington Disease: collaborated with the Huntington society of Canada to 
-                        predict and analyze their event revenue and expenses for Huntington disease research.</p><br>
-                    <iframe src="https://1drv.ms/p/s!Ahh3FjfS3-pLmSDdXon1xbpkVaJT?embed=1&amp;em=2&amp;wdAr=1.7777777777777777" width="550px" height="300px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
-                    <a href="https://github.com/adnansherwani/Huntington-Society-Of-Canada"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                </div>
-            </div>
-        </div>
-        <a href="https://github.com/adnansherwani?tab=repositories" class="btn">See More</a>
-    </div>
-</div>
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Work Samples</div>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Selected analytical and data science projects demonstrating real-world impact.</p>
+      </div>
 
-<!---------------------contact section------------------->
-<div id="contact">
+      <div class="projects-grid">
+
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <img
+              src="https://adnansherwani.github.io/IESO%20(1).png"
+              alt="IESO Ontario Energy Price"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            />
+            <div class="project-thumb-bg" style="display:none;">
+              <span class="project-thumb-icon">⚡</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">IESO Ontario Energy Price Forecasting</h3>
+            <p class="project-desc">
+              Utilized statistical analysis and time series techniques in Python and R to examine energy consumption data from PJM Energy, identifying patterns to support decision-making in energy management and resource allocation.
+            </p>
+            <div class="project-footer">
+              <div class="project-skills">
+                <span class="tag">Python</span>
+                <span class="tag">R</span>
+                <span class="tag">Time Series</span>
+                <span class="tag">NLP</span>
+              </div>
+              <a href="https://github.com/adnansherwani" target="_blank" rel="noopener" class="project-link">View →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <img
+              src="https://adnansherwani.github.io/case.png"
+              alt="Case Studies"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            />
+            <div class="project-thumb-bg" style="display:none;">
+              <span class="project-thumb-icon">📊</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Supervised ML Case Studies</h3>
+            <p class="project-desc">
+              Two in-depth case studies exploring supervised machine learning: profit maximization for a charcoal company using quantity discount modelling, and classification of house prices based on property features.
+            </p>
+            <div class="project-footer">
+              <div class="project-skills">
+                <span class="tag">ML</span>
+                <span class="tag">Classification</span>
+                <span class="tag">Regression</span>
+              </div>
+              <a href="https://github.com/adnansherwani" target="_blank" rel="noopener" class="project-link">View →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <img
+              src="https://adnansherwani.github.io/hsc-2.png"
+              alt="Huntington Society of Canada"
+              loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            />
+            <div class="project-thumb-bg" style="display:none;">
+              <span class="project-thumb-icon">🏥</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Huntington Society of Canada</h3>
+            <p class="project-desc">
+              Collaborated with the Huntington Society of Canada to predict and analyze event revenue and expenses for Huntington disease research. Built forecasting models to improve financial planning and fund allocation.
+            </p>
+            <div class="project-footer">
+              <div class="project-skills">
+                <span class="tag">Python</span>
+                <span class="tag">Forecasting</span>
+                <span class="tag">Data Analysis</span>
+              </div>
+              <a href="https://github.com/adnansherwani" target="_blank" rel="noopener" class="project-link">View →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="see-more-wrap reveal">
+        <a href="https://github.com/adnansherwani?tab=repositories" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:var(--gray-200);color:var(--navy);">
+          See All Projects on GitHub →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────── -->
+  <section id="contact">
     <div class="container">
-        <div class="row">
-            <div class="contact-left">
-                <h1 class="sub-title">Contact Me</h1>
-                <p><i class="fa-solid fa-envelope"></i><a href="mailto:adnan.sherwani@outlook.com">adnan.sherwani@outlook.com</a></p>
-                <p><i class="fa-solid fa-phone"></i>(416) 670-7327</p>
-                <div class="social-icon">
-                    <a href="https://www.facebook.com/addomaks.sherwani1/"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="https://www.linkedin.com/in/mohammad-adnan-sherwani/"><i class="fa-brands fa-linkedin"></i></a>
-                    <a href="https://github.com/adnansherwani"><i class="fa-brands fa-github"></i></a>
-                    <a href="https://www.instagram.com/adnan.sherwan_/"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-                <a href="Sherwani Adnan Resume.docx" download class="btn btn2">Download CV</a>
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Get In Touch</div>
+        <h2 class="section-title">Contact Me</h2>
+        <p class="section-subtitle" style="color:rgba(255,255,255,0.55);">Open to full-time data roles, freelance projects, and collaborations. Let's talk.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-info-list">
+            <div class="contact-info-item">
+              <div class="contact-icon">📧</div>
+              <a href="mailto:adnan.sherwani@outlook.com">adnan.sherwani@outlook.com</a>
             </div>
-            <div class="contact-right">
-                <form name="submit-to-google-sheet">
-                    <input type="text" name="Name" placeholder="Full Name" required>
-                    <input type="email" name="Email" placeholder="Email" required>
-                    <textarea placeholder="Message" name= "Message" rows="6" placeholder="Message"></textarea>
-                    <button type="submit" class="btn btn2">Send Message</button>
-                </form>
-                <span id="msg"></span>
+            <div class="contact-info-item">
+              <div class="contact-icon">📞</div>
+              <a href="tel:+14166707327">(416) 670-7327</a>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-icon">📍</div>
+              <span style="color:rgba(255,255,255,.8);font-size:.95rem;">Toronto, Ontario, Canada</span>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-icon">💼</div>
+              <a href="https://github.com/adnansherwani" target="_blank" rel="noopener">github.com/adnansherwani</a>
+            </div>
+          </div>
 
+          <div style="margin-top:2.5rem;">
+            <a href="https://adnansherwani.github.io/Sherwani%20Adnan%20Resume.docx" class="btn btn-primary" download>
+              Download CV
+            </a>
+          </div>
         </div>
+
+        <form class="contact-form reveal" onsubmit="handleForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Jane" required />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="jane@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="Opportunity / Collaboration / Question" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Hi Adnan, I'd love to connect about..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send Message</button>
+          <div id="form-success" style="display:none;color:var(--gold-light);font-size:.9rem;margin-top:.5rem;">
+            ✓ Thank you! Your message has been sent. Adnan will be in touch soon.
+          </div>
+          <p class="form-note">* This form will open your email client to send the message.</p>
+        </form>
+      </div>
     </div>
-    <div class="copyright">
-        <p>&copy; 2024 Adnan Sherwani | All Rights Reserved <i class="fa-solid fa-trademark"></i></p>   
-</div>
+  </section>
 
+  <!-- ── FOOTER ────────────────────────────── -->
+  <footer>
+    <p>© 2024 <span>Adnan Sherwani</span> · All Rights Reserved · Toronto, Canada</p>
+  </footer>
 
-
-<script>
-    var tabLinks = document.getElementsByClassName("tab-links");
-    var tabContents = document.getElementsByClassName("tab-contents");
-
-    function opentab(tabname){
-        for(tablink of tabLinks){
-            tablink.classList.remove("active-link");
-        }
-        for(tabcontent of tabContents){
-            tabcontent.classList.remove("active-tab");
-        }
-        event.currentTarget.classList.add("active-link");
-        document.getElementById(tabname).classList.add("active-tab");
-    }
-</script>
-
-<script>
-    var sidemeu = document.getElementById("sidemenu");
-    function openmenu(){
-        sidemeu.style.right = "0";
-    }
-    function closemenu(){
-       sidemeu.style.right= "-200px";
-    }
-</script>
-<script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxJwgLuXII1EqtGwyEt_cLq_GXiGHAYTa-dhcXatMbDoyZ-zE-46-DPLsxt9MJFgYghxg/exec'
-    const form = document.forms['submit-to-google-sheet']
-    const msg = document.getElementById('msg')
-  
-    form.addEventListener('submit', e => {
-      e.preventDefault()
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            msg.innerHTML = "Message Sent Successfully"
-            setTimeout(() => {
-                msg.innerHTML = ""
-            }, 5000);
-            form.reset();
-        })
-        .catch(error => console.error('Error!', error.message))
-    })
-  </script>
-
+  <!-- ── SCRIPTS ───────────────────────────── -->
   <script>
-    function togglePopup(event, title, date, description) {
-        event.preventDefault();
-        var popup = document.getElementById("popup");
-        var blur = document.getElementById("blur");
-        var popupTitle = document.getElementById("popup-title");
-        var popupDate = document.getElementById("popup-date");
-        var popupDescription = document.getElementById("popup-description");
+    // ── Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
 
-        if (title && date && description) {
-            popupTitle.innerText = title;
-            popupDate.innerText = date;
-            
-                // Split the description by the delimiter and create a list
-            var descriptionItems = description.split('|');
-            var descriptionHtml = '<ul>';
-            descriptionItems.forEach(function(item) {
-                descriptionHtml += '<li>' + item.trim() + '</li>';
-            });
-            descriptionHtml += '</ul>';
-            popupDescription.innerHTML = descriptionHtml;
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+
+    // Close mobile nav on link click
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    // ── Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        btn.closest('.tabs').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.closest('.tabs').querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + tab).classList.add('active');
+      });
+    });
+
+    // ── Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
         }
+      });
+    }, { threshold: 0.1 });
 
-        popup.classList.toggle("active");
-        blur.classList.toggle("active");
+    reveals.forEach(el => observer.observe(el));
+
+    // ── Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+      });
+      navLinks.forEach(link => {
+        link.style.color = link.getAttribute('href') === '#' + current
+          ? 'var(--gold-light)' : '';
+      });
+    }, { passive: true });
+
+    // ── Contact form (mailto fallback)
+    function handleForm(e) {
+      e.preventDefault();
+      const name    = document.getElementById('fname').value + ' ' + document.getElementById('lname').value;
+      const email   = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value || 'Portfolio Enquiry';
+      const message = document.getElementById('message').value;
+      const body    = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
+      window.location.href = `mailto:adnan.sherwani@outlook.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+      document.getElementById('form-success').style.display = 'block';
     }
   </script>
 </body>
